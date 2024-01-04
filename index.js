@@ -1,5 +1,5 @@
 const express=require("express")
-
+const cors=require("cors")
 const { connection } = require("./db")
 const connectionTimeout = require("./Middlewares/connectionTimeout.middleware")
 const { userRouter } = require("./Routers/user.router")
@@ -9,7 +9,7 @@ require("dotenv").config()
 
 const app=express()
 
-
+app.use(cors())
 app.use(connectionTimeout)
 
 app.use(express.json())
