@@ -5,7 +5,25 @@ const productRouter=express.Router()
 
 productRouter.get("/",async(req,res)=>{
     try {
-        const products=await productModel.find()
+      const { category, gender, order } = req.query;
+
+      // Build the filter object based on the provided query parameters
+      const filter = {};
+      if (category) {
+        filter.category = category;
+      }
+      if (gender) {
+        filter.gender = gender;
+      }
+  
+      // Sort products by price if orderbyprice is specified
+      const sortOptions = {};
+      if (orderbyprice) {
+        sortOptions.price = order === 'asc' ? 1 : -1;
+      }
+  
+      // Fetch products with optional filtering and sorting
+      const products = await productModel.find(filter).sort(sortOptions);
         res.status(200).send({"data":products})
         
     } catch (error) {
