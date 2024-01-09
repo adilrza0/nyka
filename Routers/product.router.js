@@ -7,7 +7,7 @@ productRouter.get("/",async(req,res)=>{
     try {
       const { category, gender, order } = req.query;
 
-      // Build the filter object based on the provided query parameters
+      
       const filter = {};
       if (category) {
         filter.category = category;
@@ -16,18 +16,21 @@ productRouter.get("/",async(req,res)=>{
         filter.gender = gender;
       }
   
-      // Sort products by price if orderbyprice is specified
+      
       const sortOptions = {};
-      if (orderbyprice) {
+      if (order) {
         sortOptions.price = order === 'asc' ? 1 : -1;
       }
   
-      // Fetch products with optional filtering and sorting
+      
+      
       const products = await productModel.find(filter).sort(sortOptions);
+      console.log(products)
         res.status(200).send({"data":products})
         
     } catch (error) {
-        res.status(400).send({"error":error})
+      console.log(error)
+        res.status(400).send({"error1":error})
         
     }
 })
